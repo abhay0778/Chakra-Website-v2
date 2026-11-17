@@ -1,19 +1,29 @@
 export interface Sponsor {
   id: string;
   name: string;
-  type: 'Sponsor' | 'Technical Partner' | 'Institutional Support';
+  type: 'Sponsor';
   description: string;
+  logo: string;
   website?: string;
+  accent: 'cyan' | 'red';
 }
 
-// Sponsor and partner placeholders — replace with real information when available.
-// Do not fabricate sponsor names or logos.
 export const sponsors: Sponsor[] = [
   {
-    id: 'institution-jyothy',
-    name: 'Jyothy Institute of Technology',
-    type: 'Institutional Support',
-    description: 'Our host institution provides lab space, infrastructure and academic support for all Team Chakra Robotics activities.',
+    id: 'technobotix',
+    name: 'TechnoBotix',
+    type: 'Sponsor',
+    description: 'Technology and robotics-related sponsor.',
+    logo: '/assets/sponsors/technobotix.png',
+    accent: 'cyan',
+  },
+  {
+    id: 'solidworks',
+    name: 'SOLIDWORKS',
+    type: 'Sponsor',
+    description: '3D CAD and engineering design software sponsor.',
+    logo: '/assets/sponsors/solidworks.png',
+    accent: 'red',
   },
 ];
 

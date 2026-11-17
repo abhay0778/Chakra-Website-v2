@@ -1,77 +1,79 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollProgress from '@/components/ScrollProgress';
-import DivisionModal from '@/components/DivisionModal';
-import ProjectModal from '@/components/ProjectModal';
-import Hero from '@/sections/Hero';
-import About from '@/sections/About';
-import Divisions from '@/sections/Divisions';
-import OurWork from '@/sections/OurWork';
-import Sponsors from '@/sections/Sponsors';
-import Contact from '@/sections/Contact';
-import { Division } from '@/data/divisions';
-import { Project } from '@/data/projects';
+import AchievementsPage from '@/pages/AchievementsPage';
+import RecognitionPage from '@/pages/RecognitionPage';
+import {
+  AboutPage,
+  ContactPage,
+  DivisionDetailPage,
+  DivisionsPage,
+  HomePage,
+  NotFoundPage,
+  ProjectDetailPage,
+  ProjectsPage,
+  RecruitmentPage,
+  SponsorsPage,
+} from '@/pages';
 
-export default function App() {
-  const [selectedDivision, setSelectedDivision] = useState<Division | null>(null);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  // Lock body scroll when modal is open
+function SiteApp() {
+  const location = useLocation();
   useEffect(() => {
-    const modalOpen = selectedDivision || selectedProject;
-    document.body.style.overflow = modalOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const titles: Record<string, string> = {
+      '/': 'Home', '/about': 'About Us', '/divisions': 'Divisions', '/projects': 'Projects & Products',
+      '/recognition': 'Recognition', '/achievements': 'Achievements', '/sponsors': 'Sponsors', '/contact': 'Contact',
+      '/recruitment': 'Recruitment 2026', '/divisions/ipd': 'Innovation and Patent Division', '/divisions/crd': 'Competitive Robotics Division',
+      '/divisions/asd': 'Applied AI and Software Division',
     };
-  }, [selectedDivision, selectedProject]);
+    document.title = `${titles[location.pathname] ?? (location.pathname.startsWith('/projects/') ? 'Project Details' : 'Not Found')} | TEAM CHAKRA ROBOTICS`;
+  }, [location.pathname]);
 
   return (
     <div className="relative min-h-screen bg-chakra-black">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-chakra-black focus:p-3 focus:text-white">Skip to content</a>
       <ScrollProgress />
       <Navbar />
-
-      <main>
-        <Hero />
-        <About />
-        <Divisions onSelectDivision={setSelectedDivision} />
-        <OurWork onSelectProject={setSelectedProject} />
-        <Sponsors />
-        <Contact />
-      </main>
-
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.main
+          key={location.pathname}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
+          id="main-content"
+          className="min-h-[70vh]"
+        >
+          <Routes location={location}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/divisions" element={<DivisionsPage />} />
+            <Route path="/divisions/:divisionId" element={<DivisionDetailPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
+            <Route path="/recognition" element={<RecognitionPage />} />
+            <Route path="/achievements" element={<AchievementsPage />} />
+            <Route path="/sponsors" element={<SponsorsPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/recruitment" element={<RecruitmentPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </motion.main>
+      </AnimatePresence>
       <Footer />
-
-      {/* Division Modal with ability to switch between divisions */}
-      <AnimatePresence>
-        {selectedDivision && (
-          <DivisionModal
-            division={selectedDivision}
-            onClose={() => setSelectedDivision(null)}
-            onSelectDivision={(div) => setSelectedDivision(div)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Project Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Page transition overlay on initial load */}
-      <motion.div
-        initial={{ scaleY: 1 }}
-        animate={{ scaleY: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-        style={{ transformOrigin: 'top' }}
-        className="fixed inset-0 z-[300] bg-chakra-black pointer-events-none"
-      />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <MotionConfig reducedMotion="user">
+        <SiteApp />
+      </MotionConfig>
+    </BrowserRouter>
   );
 }
