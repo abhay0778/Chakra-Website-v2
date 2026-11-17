@@ -34,8 +34,8 @@ export const contactInfo = {
   organisation: 'TEAM CHAKRA ROBOTICS',
   institution: 'Jyothy Institute of Technology',
   location: 'Bengaluru, Karnataka, India',
-  email: 'teamchakrarobotics@gmail.com',
-  instagram: 'https://instagram.com/chakra.robotics',
-  linkedin: 'https://linkedin.com/company/team-chakra-robotics',
+  email: 'chakrarobotics@gmail.com',
+  instagram: 'https://www.instagram.com/teamchakra.jit',
+  linkedin: 'https://www.linkedin.com/company/chakra-robotics',
   tagline: 'ENGINEERING BEYOND BOUNDARIES.',
 };

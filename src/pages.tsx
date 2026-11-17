@@ -133,7 +133,7 @@ export function HomePage() {
         </motion.h2>
       </section>
 
-      <section className="recruitment-showcase relative overflow-hidden border-b border-white/[0.06] bg-[#05070c] py-20 lg:py-28">
+      <section className="recruitment-showcase relative overflow-hidden border-b border-white/[0.06] bg-[#05070c] pb-20 pt-8 lg:pb-28 lg:pt-10">
         <div className="recruitment-glow" />
         <div className="recruitment-grid" />
         <div className="recruitment-shape recruitment-shape-1" />
@@ -141,8 +141,7 @@ export function HomePage() {
         <div className="recruitment-shape recruitment-shape-3" />
         <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7 }} className="mx-auto max-w-5xl text-center">
-            <p className="section-label justify-center"><span className="text-chakra-crimson">/</span>RECRUITMENT 2026</p>
-            <h2 className="mt-8 font-display text-4xl font-bold tracking-[-0.06em] text-white sm:text-5xl lg:text-7xl">BE PART OF TEAM CHAKRA.</h2>
+            <h2 className="font-display text-4xl font-bold tracking-[-0.06em] text-white sm:text-5xl lg:text-7xl">BE PART OF TEAM CHAKRA.</h2>
             <p className="mt-5 text-lg font-medium uppercase tracking-[0.22em] text-chakra-electric sm:text-xl">Build. Innovate. Compete. Engineer the Future.</p>
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.35em] text-chakra-silver/80">PRE-RECRUITMENT REGISTRATION CLOSES IN</p>
             <CountdownDisplay />
